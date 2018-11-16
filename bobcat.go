@@ -1,7 +1,6 @@
 package bobcat
 
 import (
-	"config"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -10,7 +9,9 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-	"utils"
+
+	"github.com/cqu903/bobcat/config"
+	"github.com/cqu903/bobcat/utils"
 )
 
 type HandleFunction func(url string, params map[string]string, request *http.Request, responseWriter http.ResponseWriter)
