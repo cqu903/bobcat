@@ -83,7 +83,7 @@ type Router struct {
 	controllerInfoList []*ControllerInfo
 }
 
-var BobCat *Router = &Router{}
+var BobCat = new(Router)
 
 func (router *Router) AddControllerInfo(c *ControllerInfo) {
 	if c == nil || c.Url == "" || c.regexp == nil || (c.GetHandleFunc == nil && c.PostHandleFunc == nil) {
@@ -91,7 +91,7 @@ func (router *Router) AddControllerInfo(c *ControllerInfo) {
 	}
 	router.controllerInfoList = append(router.controllerInfoList, c)
 }
-func (router *Router) ServeHTTP(responseWriter http.ResponseWriter, request *http.Request) {
+func (router Router) ServeHTTP(responseWriter http.ResponseWriter, request *http.Request) {
 	//handleFilter() 暂未实现
 	//session() 暂未实现
 	url := request.URL

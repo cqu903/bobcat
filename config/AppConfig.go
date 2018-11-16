@@ -4,7 +4,6 @@ package config
 //*.default.yaml是默认配置文件，首先进行加载
 //*.yaml文件是用户配置文件，会覆盖默认配置文件中相同的值
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -31,15 +30,13 @@ type AppConfig struct {
 	App
 }
 
-var Conf *AppConfig
+var Conf = new(AppConfig)
 
 //读取配置文件的值，构建全局配置对象
 func init() {
 	//load default config
-	Conf := new(AppConfig)
 	defaultConfig := rice.MustFindBox(".")
 	defaultConfigBytes, err := defaultConfig.Bytes("conf.default.yaml")
-	fmt.Println(defaultConfigBytes)
 	if err != nil {
 		log.Fatalf("load default config worng,errors:%v", err)
 	}
@@ -47,7 +44,6 @@ func init() {
 
 	//load user customer config
 	currentPath := utils.GetBaseDir()
-	fmt.Println("读取到当前配置目录：" + currentPath)
 	dir, err := os.Open(currentPath)
 	if err != nil {
 		log.Fatalf("can't open the current work path: %v", err)
@@ -58,7 +54,6 @@ func init() {
 		log.Fatalf("error:%v", err.Error())
 	}
 	for _, file := range files {
-		fmt.Println("读取到配置文件：" + file.Name())
 		if strings.HasSuffix(file.Name(), ".yaml") && !strings.HasSuffix(file.Name(), ".default.yaml") {
 			err := praseYaml(filepath.Join(currentPath, file.Name()), Conf)
 			if err != nil {
@@ -67,9 +62,8 @@ func init() {
 			}
 		}
 	}
-	fmt.Println(Conf)
 	if Conf == nil {
-		log.Fatalln("全局配置对象加载失败，请检查!")
+		log.Fatalln("Load bobcat config has wrong,can't find the right config file!please check!")
 	}
 }
 
