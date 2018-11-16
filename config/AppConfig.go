@@ -4,6 +4,7 @@ package config
 //*.default.yaml是默认配置文件，首先进行加载
 //*.yaml文件是用户配置文件，会覆盖默认配置文件中相同的值
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -29,19 +30,19 @@ type AppConfig struct {
 	App
 }
 
-var Conf = loadDefultConfig()
-
-//为配置对象配置默认的值
-func loadDefultConfig() *AppConfig {
-	conf := new(AppConfig)
-	defalutConfigFilePath := filepath.Join(utils.GetBaseDir(), "conf.default.yaml")
-	praseYaml(defalutConfigFilePath, conf)
-	return conf
-}
+var Conf *AppConfig
 
 //读取配置文件的值，构建全局配置对象
 func init() {
 	currentPath := utils.GetBaseDir()
+	fmt.Println("读取到当前配置目录：" + currentPath)
+
+	//load default config
+	conf := new(AppConfig)
+	defalutConfigFilePath := filepath.Join(currentPath, "conf.default.yaml")
+	praseYaml(defalutConfigFilePath, conf)
+
+	//load user customer config
 	dir, err := os.Open(currentPath)
 	if err != nil {
 		log.Fatalf("can't open the current work path: %v", err)
@@ -53,12 +54,16 @@ func init() {
 	}
 	for _, file := range files {
 		if strings.HasSuffix(file.Name(), ".yaml") && !strings.HasSuffix(file.Name(), ".default.yaml") {
-			err := praseYaml(filepath.Join(currentPath, file.Name()), &Conf)
+			err := praseYaml(filepath.Join(currentPath, file.Name()), Conf)
 			if err != nil {
 				log.Fatalf("load config file error,%v", err)
 				break
 			}
 		}
+	}
+	fmt.Println(Conf)
+	if Conf == nil {
+		log.Fatalln("全局配置对象加载失败，请检查!")
 	}
 }
 
