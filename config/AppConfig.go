@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/GeertJohan/go.rice"
 	"github.com/cqu903/bobcat/utils"
 	yaml "gopkg.in/yaml.v2"
 )
@@ -33,14 +32,15 @@ type AppConfig struct {
 var Conf = new(AppConfig)
 
 //读取配置文件的值，构建全局配置对象
-func init() {
+func Config() {
 	//load default config
-	defaultConfig := rice.MustFindBox(".")
-	defaultConfigBytes, err := defaultConfig.Bytes("conf.default.yaml")
-	if err != nil {
-		log.Fatalf("load default config worng,errors:%v", err)
-	}
-	yaml.Unmarshal(defaultConfigBytes, Conf)
+	Conf.Server.Port = 8080
+	Conf.Server.EnableHTTPS = false
+	Conf.Server.StaticDir = "/static/"
+
+	Conf.App.Name = "bobcat framework"
+	Conf.App.Version = "0.1"
+	Conf.App.Author = "Roy Yuan"
 
 	//load user customer config
 	currentPath := utils.GetBaseDir()
