@@ -9,8 +9,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"utils"
 
+	"github.com/cqu903/bobcat/utils"
 	yaml "gopkg.in/yaml.v2"
 )
 
