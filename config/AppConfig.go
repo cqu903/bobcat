@@ -36,14 +36,14 @@ var Conf *AppConfig
 //读取配置文件的值，构建全局配置对象
 func init() {
 	//load default config
-	conf := new(AppConfig)
+	Conf := new(AppConfig)
 	defaultConfig := rice.MustFindBox(".")
 	defaultConfigBytes, err := defaultConfig.Bytes("conf.default.yaml")
 	fmt.Println(defaultConfigBytes)
 	if err != nil {
 		log.Fatalf("load default config worng,errors:%v", err)
 	}
-	yaml.Unmarshal(defaultConfigBytes, conf)
+	yaml.Unmarshal(defaultConfigBytes, Conf)
 
 	//load user customer config
 	currentPath := utils.GetBaseDir()
@@ -58,6 +58,7 @@ func init() {
 		log.Fatalf("error:%v", err.Error())
 	}
 	for _, file := range files {
+		fmt.Println("读取到配置文件：" + file.Name)
 		if strings.HasSuffix(file.Name(), ".yaml") && !strings.HasSuffix(file.Name(), ".default.yaml") {
 			err := praseYaml(filepath.Join(currentPath, file.Name()), Conf)
 			if err != nil {
