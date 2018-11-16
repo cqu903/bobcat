@@ -58,7 +58,7 @@ func init() {
 		log.Fatalf("error:%v", err.Error())
 	}
 	for _, file := range files {
-		fmt.Println("读取到配置文件：" + file.Name)
+		fmt.Println("读取到配置文件：" + file.Name())
 		if strings.HasSuffix(file.Name(), ".yaml") && !strings.HasSuffix(file.Name(), ".default.yaml") {
 			err := praseYaml(filepath.Join(currentPath, file.Name()), Conf)
 			if err != nil {
