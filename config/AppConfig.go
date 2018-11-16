@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/GeertJohan/go.rice"
 	"github.com/cqu903/bobcat/utils"
 	yaml "gopkg.in/yaml.v2"
 )
@@ -34,15 +35,19 @@ var Conf *AppConfig
 
 //读取配置文件的值，构建全局配置对象
 func init() {
-	currentPath := utils.GetBaseDir()
-	fmt.Println("读取到当前配置目录：" + currentPath)
-
 	//load default config
 	conf := new(AppConfig)
-	defalutConfigFilePath := filepath.Join(currentPath, "conf.default.yaml")
-	praseYaml(defalutConfigFilePath, conf)
+	defaultConfig := rice.MustFindBox(".")
+	defaultConfigBytes, err := defaultConfig.Bytes("conf.default.yaml")
+	fmt.Println(defaultConfigBytes)
+	if err != nil {
+		log.Fatalf("load default config worng,errors:%v", err)
+	}
+	yaml.Unmarshal(defaultConfigBytes, conf)
 
 	//load user customer config
+	currentPath := utils.GetBaseDir()
+	fmt.Println("读取到当前配置目录：" + currentPath)
 	dir, err := os.Open(currentPath)
 	if err != nil {
 		log.Fatalf("can't open the current work path: %v", err)
