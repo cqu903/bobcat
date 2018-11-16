@@ -170,8 +170,12 @@ func generateParams(request *http.Request) map[string]string {
 
 	return paramsMap
 }
+func init() {
+	config.Config()
+}
 
 //启动http服务
 func StartHttpServe() {
+
 	http.ListenAndServe(":"+strconv.Itoa(config.Conf.Server.Port), BobCat)
 }
