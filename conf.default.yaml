@@ -1,0 +1,8 @@
+server:
+  port: 80
+  enableHTTPS: false
+  staticDir: /static/
+app:
+  name: BobCat App
+  version: 0.1
+  author: roy
