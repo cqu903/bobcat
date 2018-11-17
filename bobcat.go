@@ -175,7 +175,6 @@ func init() {
 }
 
 //启动http服务
-func StartHttpServe() {
-
-	http.ListenAndServe(":"+strconv.Itoa(config.Conf.Server.Port), BobCat)
+func StartHttpServe() error {
+	return http.ListenAndServe(":"+strconv.Itoa(config.Conf.Server.Port), BobCat)
 }

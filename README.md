@@ -29,7 +29,10 @@ just use the shell to install it!
       //add the controler to the router
       bobcat.BobCat.AddControllerInfo(c)
       //start the server
-      bobcat.StartHttpServe()
+      err := bobcat.StartHttpServe()
+      if(err!=nil){
+	      log.Fatalf("try to start http server failed ,errors:%v",err)
+      }
     }
 
     func ShowConfig(url string, params map[string]string, request *http.Request, responseWriter http.ResponseWriter) {

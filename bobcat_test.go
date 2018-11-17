@@ -7,7 +7,6 @@ import (
 
 func TestNewControllerInfo(t *testing.T) {
 	c, _ := NewControllerInfo("/home/:id", handleFunc, handleFunc)
-	t.Log(c)
 	if c.regexp == nil {
 		t.Fail()
 	}
