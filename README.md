@@ -45,9 +45,11 @@ just use the shell to install it!
 you can create *.yaml in your src path,bobcat will find and put it in it's config.so you can use your own config to replace the default config.the next is a full config for reference.
     
     server:
-      port: 80
-      enableHTTPS: false
+      port: 443
+      enableHTTPS: true
       staticDir: /static/
+      certFile: certFilePath
+      keyFile: keyFilePath
     app:
       name: simple web app
       version: 1.0
