@@ -18,6 +18,8 @@ type Server struct {
 	Port        int    `yaml:"port"`
 	EnableHTTPS bool   `yaml:"enableHTTPS"`
 	StaticDir   string `yaml:"staticDir"`
+	CertFile    string `yaml:"certFile"`
+	keyFile     string `yaml:"keyFile"`
 }
 type App struct {
 	Name    string `yaml:"name"`
