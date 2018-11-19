@@ -184,8 +184,8 @@ func StartHttpServe() error {
 		WriteTimeout: 30 * time.Second,
 	}
 	if config.Conf.EnableHTTPS {
-		return server.ListenAndServe()
-	} else {
 		return server.ListenAndServeTLS(config.Conf.Server.CertFile, config.Conf.Server.KeyFile)
+	} else {
+		return server.ListenAndServe()
 	}
 }
