@@ -19,7 +19,7 @@ type Server struct {
 	EnableHTTPS bool   `yaml:"enableHTTPS"`
 	StaticDir   string `yaml:"staticDir"`
 	CertFile    string `yaml:"certFile"`
-	keyFile     string `yaml:"keyFile"`
+	KeyFile     string `yaml:"keyFile"`
 }
 type App struct {
 	Name    string `yaml:"name"`
