@@ -9,6 +9,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/cqu903/bobcat/config"
 	"github.com/cqu903/bobcat/utils"
@@ -176,5 +177,15 @@ func init() {
 
 //启动http服务
 func StartHttpServe() error {
-	return http.ListenAndServe(":"+strconv.Itoa(config.Conf.Server.Port), BobCat)
+	server := &http.Server{
+		Addr:         ":" + strconv.Itoa(config.Conf.Port),
+		Handler:      BobCat,
+		ReadTimeout:  30 * time.Second,
+		WriteTimeout: 30 * time.Second,
+	}
+	if config.Conf.EnableHTTPS {
+		return server.ListenAndServe()
+	} else {
+		return server.ListenAndServeTLS(config.Conf.Server.CertFile, config.Conf.Server.KeyFile)
+	}
 }

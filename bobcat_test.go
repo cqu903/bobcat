@@ -13,5 +13,4 @@ func TestNewControllerInfo(t *testing.T) {
 	assert.Equal(t, "id", c.paramNames[0], "the first param must equals 'id'")
 }
 func handleFunc(url string, params map[string]string, request *http.Request, responseWriter http.ResponseWriter) {
-
 }
