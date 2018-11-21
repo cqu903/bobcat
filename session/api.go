@@ -9,6 +9,8 @@ type Session interface {
 	ExpireImmediately()
 	//return is the session expired
 	IsExpire() bool
+	//return the session key,a session key is the unique identifier
+	GetSessionKey() string
 }
 
 type SessionManager interface {
