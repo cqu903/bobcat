@@ -11,6 +11,7 @@ type memorySession struct {
 	createTime time.Time
 	expireTime time.Time
 	expire     bool
+
 }
 
 func (s *memorySession) AddParam(key string, val interface{}) {
@@ -24,6 +25,9 @@ func (s *memorySession) ExpireImmediately() {
 }
 func (s *memorySession) IsExpire() bool {
 	return s.expire
+} 
+func (s *memorySession) GetSessionKey() string{
+	return s.token
 }
 
 type memorySessionManager struct {
@@ -34,7 +38,7 @@ func (m memorySessionManager) GetSession(sessionToken string,isCreateOnNil bool)
 	s := m.sessionMap[sessionToken]
 	if isCreateOnNil {
 		if s == nil {
-			m.sessionMap[sessionToken] = &memorySession{}
+			m.sessionMap[sessionToken] = &memorySession{token:sessionToken,createTime:time.Now(),expire:false,expireTime:time.Now().Add(30*time.Minute)}
 		}
 		return s
 	} 
