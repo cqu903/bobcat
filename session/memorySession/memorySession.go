@@ -38,7 +38,13 @@ func (m *memorySessionManager) GetSession(sessionToken string,isCreateOnNil bool
 	s := m.sessionMap[sessionToken]
 	if isCreateOnNil {
 		if s == nil {
-			s = &memorySession{token:sessionToken,createTime:time.Now(),expire:false,expireTime:time.Now().Add(30*time.Minute)}
+			s = &memorySession{
+				token:sessionToken,
+				createTime:time.Now(),
+				expire:false,
+				expireTime:time.Now().Add(30*time.Minute),
+				paramMap:make(map[string]interface{}),
+			}
 			m.sessionMap[sessionToken] = s
 		}
 		return s
