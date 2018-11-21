@@ -43,6 +43,6 @@ func (m memorySessionManager) GetSession(sessionToken string,isCreateOnNil bool)
 	} 
 	return s
 }
-func (m memorySessionManager) NewSessionManager() session.SessionManager{
+func  NewSessionManager() session.SessionManager{
 	return memorySessionManager{}
 }
