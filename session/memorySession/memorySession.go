@@ -34,7 +34,7 @@ type memorySessionManager struct {
 	sessionMap map[string]*memorySession
 }
 
-func (m memorySessionManager) GetSession(sessionToken string,isCreateOnNil bool) session.Session {
+func (m *memorySessionManager) GetSession(sessionToken string,isCreateOnNil bool) session.Session {
 	s := m.sessionMap[sessionToken]
 	if isCreateOnNil {
 		if s == nil {
@@ -48,5 +48,5 @@ func (m memorySessionManager) GetSession(sessionToken string,isCreateOnNil bool)
 	return s
 }
 func  NewSessionManager() session.SessionManager{
-	return memorySessionManager{}
+	return &memorySessionManager{sessionMap:make(map[string]*memorySession)}
 }
