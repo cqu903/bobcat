@@ -12,5 +12,6 @@ type Session interface {
 }
 
 type SessionManager interface {
-	GetSession(isCreateOnNil bool) Session
+	GetSession(token string,isCreateOnNil bool) Session
+	NewSessionManager()*SessionManager
 }
